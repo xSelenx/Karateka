@@ -22,7 +22,7 @@ export default {
 
 <template lang="pug">
   .home
-    h1 Picories
+    h1 Karateka
     p The time is: {{ time }}
     h2 Users
     div(v-for="user in users")
