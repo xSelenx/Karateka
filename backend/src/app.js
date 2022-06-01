@@ -12,8 +12,8 @@ const User = require('./models/user')
 
 require('./database-connection')
 
-const clientPromise = mongoose.connection.asPromise().then(connection => connection.getClient())
-
+//const clientPromise = mongoose.connection.asPromise().then(connection => connection.getClient())
+const clientPromise = mongoose.connection.then(connection => connection.getClient())
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
 const photosRouter = require('./routes/photos')
