@@ -7,18 +7,28 @@ const Photo = require('../models/photo')
 
 /* GET users listing. */
 router.get('/', async (req, res) => {
+  console.log(req.method)
+  console.log('test!!!')
   const query = {}
 
-  if (req.query.name) {
-    query.name = req.query.name
+  if (req.query.firstName) {
+    query['firstName'] = req.query.firstName
   }
 
-  if (req.query.age) {
-    query.age = req.query.age
+  if (req.query.lastName) {
+    query['last Name'] = req.query.lastName
   }
 
   if (req.query.email) {
-    query.email = req.query.email
+    query['email'] = req.query.email
+  }
+
+  if (req.query.age) {
+    query['age'] = req.query.age
+  }
+
+  if (req.query.belt) {
+    query['belt'] = req.query.belt
   }
 
   res.send(await User.find(query))
@@ -31,10 +41,10 @@ router.post('/', async (req, res) => {
 })
 
 router.get('/initialize', async (req, res) => {
-  const mihri = await User.create({ name: 'mihri', age: 35, email: `mihri@example.com` })
-  const armagan = await User.create({ name: 'armagan', age: 36, email: `armagan@example.com` })
+  const mihri = await User.create({ name: 'mihri', age: 35, email: `mihri@example.com`, belt: 'white' })
+  const armagan = await User.create({ name: 'armagan', age: 36, email: `armagan@example.com`, belt: 'yellow' })
 
-  const steve = await User.create({ name: 'steve', age: 21, email: `steve@example.com` })
+  const steve = await User.create({ name: 'steve', age: 21, email: `steve@example.com`, belt: 'orange' })
 
   mihri.setPassword('test')
   armagan.setPassword('test')
@@ -71,6 +81,7 @@ router.post('/:userId/likes', async (req, res) => {
 })
 
 router.get('/:userId', async (req, res) => {
+  console.log('Hello Karatekas')
   const user = await User.findById(req.params.userId)
 
   if (user) res.render('user', { user })

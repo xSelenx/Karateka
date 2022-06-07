@@ -4,7 +4,7 @@ const router = express.Router()
 
 /* GET home page. */
 router.get('/', (req, res) => {
-  res.render('index', { title: 'be208' })
+  res.render('index', { title: 'karateka' })
 })
 
 router.get('/bootstrap', (req, res) => {
