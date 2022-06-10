@@ -41,10 +41,16 @@ router.post('/', async (req, res) => {
 })
 
 router.get('/initialize', async (req, res) => {
-  const mihri = await User.create({ name: 'mihri', age: 35, email: `mihri@example.com`, belt: 'white' })
-  const armagan = await User.create({ name: 'armagan', age: 36, email: `armagan@example.com`, belt: 'yellow' })
+  const mihri = await User.create({ firstName: 'mihri', age: 35, email: `mihri@example.com`, belt: 'white' })
+  const armagan = await User.create({ firstName: 'armagan', age: 36, email: `armagan@example.com`, belt: 'yellow' })
 
-  const steve = await User.create({ name: 'steve', age: 21, email: `steve@example.com`, belt: 'orange' })
+  const steve = await User.create({
+    firstName: 'steve',
+    age: 21,
+    email: `steve@example.com`,
+    belt: 'orange',
+    city: 'berlin',
+  })
 
   mihri.setPassword('test')
   armagan.setPassword('test')
@@ -92,5 +98,8 @@ router.get('/:userId/json', async (req, res) => {
   const user = await User.findById(req.params.userId)
   res.send(user)
 })
-
+router.delete('/', async (req, res) => {
+  await User.deleteMany({})
+  res.send()
+})
 module.exports = router

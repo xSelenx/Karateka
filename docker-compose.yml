@@ -5,12 +5,14 @@ services:
     build:
       context: frontend
       dockerfile: Dockerfile
+    environment:
+      - PORT=8081
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend.rule=Host(`karateka.localhost`)"
       - "traefik.http.routers.frontend.entrypoints=web"
     ports:
-      - 8080
+      - 8081
     volumes:
       - ./frontend/src:/app/src
       - ./frontend/public:/app/public
@@ -23,17 +25,16 @@ services:
       # - MONGODB_USERNAME
       # - MONGODB_PASSWORD
       # - MONGODB_DATABASE
-      - MONGODB_CONNECTION_STRING=mongodb://mongo/be208
+      - MONGODB_CONNECTION_STRING=mongodb://mongo/karateka
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.backend.rule=(Host(`karateka.localhost`) && PathPrefix(`/api`))"
+      - "traefik.http.routers.backend.rule=(Host(`karateka.localhost`) && (PathPrefix(`/api`) || PathPrefix(`/socket`)))"
       - "traefik.http.routers.backend.entrypoints=web"
     ports:
-      - 3000
+      - 3000:3000
       - 35729:35729
     volumes:
       - ./backend/src:/app/src
-      - ./backend/test:/app/test
   mongo:
     image: mongo
     ports:

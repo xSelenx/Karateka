@@ -10,6 +10,7 @@ const passport = require('passport')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const User = require('./models/user')
+const socketService = require('./socket-service')
 
 require('./database-connection')
 
@@ -37,6 +38,10 @@ if (app.get('env') == 'development') {
     .createServer({ extraExts: ['pug'] })
     .watch([`${__dirname}/public`, `${__dirname}/views`])
 }
+
+app.set('trust proxy', 1)
+
+app.set('io', socketService)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))

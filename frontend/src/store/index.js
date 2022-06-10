@@ -2,7 +2,14 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
+import io from 'socket.io-client'
+
+axios.defaults.baseURL = process.env.VUE_BASE_URL
+axios.defaults.withCredentials = true
+
 Vue.use(Vuex)
+
+const socket = io(process.env.VUE_APP_BASE_URL)
 
 const mutations = {
   INCREMENT_COUNT: 'increment count',
@@ -41,8 +48,7 @@ const store = new Vuex.Store({
     async login({ commit }, credentials) {
       // eslint-disable-next-line no-useless-catch
       try {
-        const user = await axios.post('/api/account/session', credentials)
-        commit(mutations.SET_USER, user.data)
+        const user = (await axios.post('/api/account/session', credentials)) / commit(mutations.SET_USER, user.data)
       } catch (e) {
         throw e
       }
