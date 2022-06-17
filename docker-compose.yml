@@ -51,3 +51,11 @@ services:
       - "8080:8080"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+  mongo:
+    image: mongo
+    # container_name: mongo
+    ports:
+       - 27017:27017
+  load-balancer:
+    image: traefik:v2.2
+    # container_name: load-balancer
