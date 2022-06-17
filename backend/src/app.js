@@ -1,6 +1,6 @@
 const createError = require('http-errors')
 const express = require('express')
-const helmet = require('helmet')
+// const helmet = require('helmet')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
@@ -14,7 +14,7 @@ const socketService = require('./socket-service')
 
 require('./database-connection')
 
-//const clientPromise = mongoose.connection.asPromise().then(connection => connection.getClient())
+// const clientPromise = mongoose.connection.asPromise().then(connection => connection.getClient())
 const clientPromise = mongoose.connection.then(connection => connection.getClient())
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
@@ -77,11 +77,11 @@ passport.deserializeUser(User.deserializeUser())
 
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/api', (req, res, next) => {
-  req.session.viewCount = req.session.viewCount || 0
-  req.session.viewCount++
-  next()
-})
+//  app.use('/api', (req, res, next) => {
+//  req.session.viewCount = req.session.viewCount || 0
+//  req.session.viewCount++
+//  next()
+// })
 
 app.use('/api/', indexRouter)
 app.use('/api/account', accountRouter)
@@ -94,7 +94,7 @@ app.use((req, res, next) => {
 })
 
 // error handler
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   // set locals, only providing error in development
   res.locals.message = err.message
   res.locals.error = req.app.get('env') === 'development' ? err : {}
