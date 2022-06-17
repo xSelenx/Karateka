@@ -12,23 +12,23 @@ router.get('/', async (req, res) => {
   const query = {}
 
   if (req.query.firstName) {
-    query['firstName'] = req.query.firstName
+    query.firstName = req.query.firstName
   }
 
   if (req.query.lastName) {
-    query['last Name'] = req.query.lastName
+    query.lastName = req.query.lastName
   }
 
   if (req.query.email) {
-    query['email'] = req.query.email
+    query.email = req.query.email
   }
 
   if (req.query.age) {
-    query['age'] = req.query.age
+    query.age = req.query.age
   }
 
   if (req.query.belt) {
-    query['belt'] = req.query.belt
+    query.belt = req.query.belt
   }
 
   res.send(await User.find(query))
@@ -40,17 +40,39 @@ router.post('/', async (req, res) => {
   res.send(createdUser)
 })
 
+/* DELETE users */
+router.delete('/', async (req, res) => {
+  await User.deleteMany({})
+
+  res.sendStatus(200)
+})
+
+/* DELETE a user */
+router.delete('/byEmail/:email', async (req, res) => {
+  console.log(req.params.email)
+
+  await User.deleteOne({ email: req.params.email })
+
+  res.sendStatus(200)
+})
+
 router.get('/initialize', async (req, res) => {
+  // temporary delete for development
+  // await User.deleteMany({})
   const mihri = await User.create({ firstName: 'mihri', age: 35, email: `mihri@example.com`, belt: 'white' })
   const armagan = await User.create({ firstName: 'armagan', age: 36, email: `armagan@example.com`, belt: 'yellow' })
 
   const steve = await User.create({
     firstName: 'steve',
+    lastName: 'steve',
     age: 21,
     email: `steve@example.com`,
     belt: 'orange',
     city: 'berlin',
   })
+
+  // await steve.setPassword('test')
+  // await steve.save()
 
   mihri.setPassword('test')
   armagan.setPassword('test')
@@ -98,6 +120,7 @@ router.get('/:userId/json', async (req, res) => {
   const user = await User.findById(req.params.userId)
   res.send(user)
 })
+
 router.delete('/', async (req, res) => {
   await User.deleteMany({})
   res.send()
