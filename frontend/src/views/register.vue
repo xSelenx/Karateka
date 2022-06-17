@@ -24,7 +24,6 @@ export default {
           name: this.name,
           age: this.age,
           email: this.email,
-          password: this.password,
         })
 
         this.$router.push('/login')
