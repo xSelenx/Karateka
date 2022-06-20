@@ -13,7 +13,7 @@ export default {
 }
 </script>
 <template lang="pug">
-  #app
+#app
     //#nav
       router-link(to="/profile") Profile
       router-link(to="/login") Login
@@ -36,7 +36,7 @@ export default {
             router-link(to="/register") Register
               //a.nav-link.disabled Disabled
             li.nav-item
-            a.nav-link(a(@click="doLogout" href="#") Logout)
+            a.nav-link(@click="doLogout") Logout)
           form.d-flex(role='search')
             input.form-control.me-2(type='search', placeholder='Search', aria-label='Search')
             button.btn.btn-outline-success(type='submit') Search
