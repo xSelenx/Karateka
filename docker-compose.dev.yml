@@ -37,10 +37,12 @@ services:
       - ./backend/src:/app/src
   mongo:
     image: mongo
+    container_name: mongo
     ports:
       - 27017:27017
   load-balancer:
     image: traefik:v2.2
+    container_name: load-balancer
     command:
       - "--api.insecure=true"
       - "--providers.docker=true"

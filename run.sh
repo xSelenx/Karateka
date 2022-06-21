@@ -5,8 +5,8 @@
 #
 build=${1:-""}
 
-dockerComposeFile=docker-compose.dev.yml
 dockerComposeFile=docker-compose.yml
+dockerComposeFile=docker-compose.dev.yml
 
 docker-compose -f ${dockerComposeFile} up --detach ${build} mongo    load-balancer
 docker-compose -f ${dockerComposeFile} up          ${build} frontend backend
