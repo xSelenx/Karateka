@@ -10,12 +10,13 @@ const passport = require('passport')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const User = require('./models/user')
-const socketService = require('./socket-service')
 
 require('./database-connection')
 
 // const clientPromise = mongoose.connection.asPromise().then(connection => connection.getClient())
 const clientPromise = mongoose.connection.then(connection => connection.getClient())
+const socketService = require('./socket-service')
+
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
 const photosRouter = require('./routes/photos')
@@ -27,7 +28,7 @@ const app = express()
 app.use(
   cors({
     origin: true,
-    creadentials: true,
+    credentials: true,
   })
 )
 
